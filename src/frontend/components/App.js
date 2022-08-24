@@ -4,12 +4,13 @@ import {
   Route
 } from "react-router-dom";
 import Navigation from './Navbar';
+import React from 'react';
 import Home from './Home.js'
 import Create from './Create.js'
 import MyListedItems from './MyListedItems.js'
 import MyPurchases from './MyPurchases.js'
 import MarketplaceAbi from '../contractsData/Marketplace.json'
-import MarketplaceAddress from '../contractsData/Marketplace-address.json'
+import MarketplaceAddress from '../contractsData/marketplace-address.json'
 import NFTAbi from '../contractsData/NFT.json'
 import NFTAddress from '../contractsData/NFT-address.json'
 import { useState } from 'react'
@@ -19,6 +20,7 @@ import { Spinner } from 'react-bootstrap'
 import './App.css';
 
 function App() {
+  document.title = "NFT Marketplace"
   const [loading, setLoading] = useState(true)
   const [account, setAccount] = useState(null)
   const [nft, setNFT] = useState({})
