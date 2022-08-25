@@ -37,7 +37,7 @@ export default function MyListedItems({ marketplace, nft, account }) {
         // get uri url from nft contract
         const uri = await nft.tokenURI(i.tokenId)
         // use uri to fetch the nft metadata stored on ipfs 
-        const response = await fetch(uri)
+        const response = await fetch('https://testnet5.infura-ipfs.io/ipfs/'+uri)
         const metadata = await response.json()
         // get total price of item (item price + fee)
         const totalPrice = await marketplace.getTotalPrice(i.itemId)
@@ -48,7 +48,7 @@ export default function MyListedItems({ marketplace, nft, account }) {
           itemId: i.itemId,
           name: metadata.name,
           description: metadata.description,
-          image: metadata.image
+          image: 'https://testnet5.infura-ipfs.io/ipfs/'+metadata.image
         }
         listedItems.push(item)
         // Add listed item to sold items array if sold

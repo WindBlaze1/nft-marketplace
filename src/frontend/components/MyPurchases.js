@@ -16,8 +16,9 @@ export default function MyPurchases({ marketplace, nft, account }) {
       // get uri url from nft contract
       const uri = await nft.tokenURI(i.tokenId)
       // use uri to fetch the nft metadata stored on ipfs 
-      const response = await fetch(uri)
+      const response = await fetch('https://testnet5.infura-ipfs.io/ipfs/'+uri)
       const metadata = await response.json()
+      console.log(metadata)
       // get total price of item (item price + fee)
       const totalPrice = await marketplace.getTotalPrice(i.itemId)
       // define listed item object
@@ -27,7 +28,7 @@ export default function MyPurchases({ marketplace, nft, account }) {
         itemId: i.itemId,
         name: metadata.name,
         description: metadata.description,
-        image: metadata.image
+        image: 'https://testnet5.infura-ipfs.io/ipfs/' + metadata.image
       }
       return purchasedItem
     }))
@@ -51,6 +52,12 @@ export default function MyPurchases({ marketplace, nft, account }) {
               <Col key={idx} className="overflow-hidden">
                 <Card>
                   <Card.Img variant="top" src={item.image} />
+                  <Card.Body color="secondary">
+                    <Card.Title>{item.name}</Card.Title>
+                    <Card.Text>
+                      {item.description}
+                    </Card.Text>
+                  </Card.Body>
                   <Card.Footer>{ethers.utils.formatEther(item.totalPrice)} ETH</Card.Footer>
                 </Card>
               </Col>

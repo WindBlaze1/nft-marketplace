@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react'
 import { ethers } from "ethers"
 import { Row, Col, Card, Button } from 'react-bootstrap'
-
+// require('dotenv').config()
 const Home = ({ marketplace, nft }) => {
   const [loading, setLoading] = useState(true)
   const [items, setItems] = useState([])
   const loadMarketplaceItems = async () => {
     // Load all unsold items
+    console.log(process.env)
     const itemCount = await marketplace.itemCount()
     let items = []
     for (let i = 1; i <= itemCount; i++) {
@@ -15,7 +16,7 @@ const Home = ({ marketplace, nft }) => {
         // get uri url from nft contract
         const uri = await nft.tokenURI(item.tokenId)
         // use uri to fetch the nft metadata stored on ipfs 
-        const response = await fetch(uri)
+        const response = await fetch('https://testnet5.infura-ipfs.io/ipfs/'+uri)
         const metadata = await response.json()
         // get total price of item (item price + fee)
         const totalPrice = await marketplace.getTotalPrice(item.itemId)
@@ -26,7 +27,7 @@ const Home = ({ marketplace, nft }) => {
           seller: item.seller,
           name: metadata.name,
           description: metadata.description,
-          image: metadata.image
+          image: 'https://testnet5.infura-ipfs.io/ipfs/' + metadata.image
         })
       }
     }
